@@ -1,6 +1,7 @@
 import * as jsonToAst from "json-to-ast";
+import { Rule } from "./rule";
 
-export type JsonAST = jsonToAst.AstJsonEntity | undefined;
+export type JsonAST = jsonToAst.AstEntity | undefined;
 
 export interface LinterProblem<TKey> {
     key: TKey;
@@ -20,13 +21,13 @@ function makeLint<TProblemKey>(
 ): LinterProblem<TProblemKey>[] {
 
     function walk(
-        node: jsonToAst.AstJsonEntity,
+        node: jsonToAst.AstEntity,
         cbProp: (property: jsonToAst.AstProperty) => void,
         cbObj: (property: jsonToAst.AstObject) => void
     ) {
         switch (node.type) {
             case 'Array':
-                node.children.forEach((item: jsonToAst.AstJsonEntity) => {
+                node.children.forEach((item: jsonToAst.AstEntity) => {
                     walk(item, cbProp, cbObj);
                 });
                 break;
@@ -41,7 +42,9 @@ function makeLint<TProblemKey>(
         }
     }
 
-    function parseJson(json: string):JsonAST  {return jsonToAst(json); }
+    function parseJson(json: string): JsonAST {
+        return jsonToAst(json);
+    }
 
     const errors: LinterProblem<TProblemKey>[] = [];
     const ast: JsonAST = parseJson(json);
@@ -54,3 +57,20 @@ function makeLint<TProblemKey>(
 
     return errors;
 }
+class RuleRegistry {
+
+    messages: Map<string, string>;
+
+    constructor() {
+        this.messages = new Map<string, string>();
+    }
+
+    add(rule: Rule) {
+        Object.keys(rule.messages)
+            .forEach(key => {
+                this.messages.set(key, rule.messages[key]);
+            });
+    }
+}
+
+
