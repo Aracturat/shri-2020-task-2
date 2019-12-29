@@ -1,0 +1,32 @@
+{
+  "name": "shri-2020-task-1",
+  "version": "1.0.0",
+  "description": "В этом репозитории находятся материалы тестового задания «Напишите линтер» для [16-й Школы разработки интерфейсов](https://yandex.ru/promo/academy/shri) (зима 2020, Москва)",
+  "main": "templater.js",
+  "scripts": {
+    "dev": "webpack -w --mode=development",
+    "build": "webpack --mode=production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aracturat/shri-2020-task-2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Aracturat/shri-2020-task-2/issues"
+  },
+  "homepage": "https://github.com/Aracturat/shri-2020-task-2#readme",
+  "dependencies": {
+    "@types/node": "^13.1.1",
+    "json-to-ast": "^2.1.0",
+    "tslint": "^5.20.1",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
+  },
+  "devDependencies": {
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.4"
+  }
+}
