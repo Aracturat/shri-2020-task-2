@@ -12,12 +12,7 @@ export class TextSeveralH1Rule implements Rule {
         let h1Found = false;
 
         return {
-            'Object': function (node: AstObject) {
-                let bemInfo = tryGetBemInfo(node);
-                if (bemInfo.block !== 'text') {
-                    return;
-                }
-
+            'Bem:text': function (node: AstObject) {
                 // Получаем mods.
                 let typeEntity = findByPath(node, 'mods.type');
                 if (!typeEntity || typeEntity.type !== 'Literal') {

@@ -23,12 +23,7 @@ export class WarningInvalidButtonSizeRule implements Rule {
         };
 
         return {
-            'Object': function (node: AstObject) {
-                let bemInfo = tryGetBemInfo(node);
-                if (bemInfo.block !== 'warning') {
-                    return;
-                }
-
+            'Bem:warning': function (node: AstObject) {
                 // Проверяем, есть ли content.
                 const content = findProperty(node, 'content');
 
