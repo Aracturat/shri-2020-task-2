@@ -6,6 +6,7 @@ import { WarningTextSizesShouldBeEqualRule } from "./rules/warning-text-sizes-sh
 import { RuleRegistry } from "./rule";
 import { WarningInvalidButtonSizeRule } from "./rules/warning-invalid-button-size-rule";
 import { TextSeveralH1Rule } from "./rules/text-several-h1-rule";
+import { WarningInvalidButtonPositionRule } from "./rules/warning-invalid-button-position-rule";
 
 export function lint(json: string) {
     const ast = parseJson(json);
@@ -15,6 +16,7 @@ export function lint(json: string) {
 
     ruleRegistry.add(new WarningTextSizesShouldBeEqualRule());
     ruleRegistry.add(new WarningInvalidButtonSizeRule());
+    ruleRegistry.add(new WarningInvalidButtonPositionRule())
     ruleRegistry.add(new TextSeveralH1Rule());
 
     if (ast) {

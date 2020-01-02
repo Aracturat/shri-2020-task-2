@@ -1,12 +1,13 @@
 import { Context } from "./context";
 import { AstEntity } from "json-to-ast";
+import { tryGetBemInfo } from "./utils";
 
 export type Checker = (node: AstEntity, nodeId?: number) => void
 
 export interface Rule {
     messages: { [code: string]: string };
 
-    create(context: Context): { [nodeType: string]: Checker };
+    create(context: Context): { [nodeType: string]: Checker | Checker[] };
 }
 
 
@@ -27,12 +28,16 @@ export class RuleRegistry {
 
         let checkers = rule.create(this.context);
 
-        const addToCheckers = (key: string, checker: Checker) => {
+        const addToCheckers = (key: string, checker: Checker | Checker[]) => {
             if (!this.checkers.has(key)) {
                 this.checkers.set(key, []);
             }
 
-            this.checkers.get(key).push(checker);
+            if (checker instanceof Array) {
+                this.checkers.get(key).push(...checker);
+            } else {
+                this.checkers.get(key).push(checker);
+            }
         };
 
         Object.keys(checkers)
@@ -45,11 +50,26 @@ export class RuleRegistry {
             });
     }
 
-    applyCheckers(node: AstEntity, nodeId: number, type: 'Enter' | 'Exit') {
-        let checkers = this.checkers.get(`${ node.type }:${ type }`);
+    private applyCheckersByCheckerType(checkerType: string, node: AstEntity, nodeId: number) {
+        let checkers = this.checkers.get(checkerType);
 
         if (checkers) {
             checkers.forEach(checker => checker(node, nodeId));
+        }
+    }
+
+    applyCheckers(node: AstEntity, nodeId: number, type: 'Enter' | 'Exit') {
+        this.applyCheckersByCheckerType(`${ node.type }:${ type }`, node, nodeId);
+
+        if (node.type === 'Object') {
+            let bemInfo = tryGetBemInfo(node);
+
+            if (bemInfo.block) {
+                this.applyCheckersByCheckerType(`Bem:${ bemInfo.block }:${ type }`, node, nodeId);
+            }
+            if (bemInfo.elem) {
+                this.applyCheckersByCheckerType(`Bem:${ bemInfo.block }__${ bemInfo.elem }:${ type }`, node, nodeId);
+            }
         }
     }
 
