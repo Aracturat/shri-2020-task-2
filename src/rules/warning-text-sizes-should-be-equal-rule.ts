@@ -1,7 +1,8 @@
-import { Context } from "../context";
 import { AstObject } from "json-to-ast";
+
+import { Context } from "../context";
 import { Rule } from "../rule";
-import { findBlocks, findByPath, findProperty, tryGetBemInfo } from "../utils";
+import { findBlocks, findByPath, findProperty } from "../utils";
 
 export class WarningTextSizesShouldBeEqualRule implements Rule {
     messages = {
@@ -46,7 +47,7 @@ export class WarningTextSizesShouldBeEqualRule implements Rule {
                 if (!isValid) {
                     context.report({
                         node: node,
-                        messageId: 'WARNING.TEXT_SIZES_SHOULD_BE_EQUAL'
+                        code: 'WARNING.TEXT_SIZES_SHOULD_BE_EQUAL'
                     });
                 }
             }

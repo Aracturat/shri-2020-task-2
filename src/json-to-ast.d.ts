@@ -25,7 +25,7 @@ declare namespace JsonToAst {
 
     export interface AstObject {
         type: 'Object';
-        children: AstProperty[];
+        children: Array<AstProperty>;
         loc: AstLocation;
     }
 

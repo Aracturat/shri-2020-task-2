@@ -1,11 +1,7 @@
 import { AstEntity } from "json-to-ast";
 
-let NODE_ID = 0;
-
-export function walk(node: AstEntity, func: (node: AstEntity, nodeId: number, type: 'Enter' | 'Exit') => void) {
-    const nodeId = NODE_ID++;
-
-    func(node, nodeId, 'Enter');
+export function walk(node: AstEntity, func: (node: AstEntity, type: 'Enter' | 'Exit') => void) {
+    func(node, 'Enter');
 
     switch (node.type) {
         case 'Array':
@@ -27,5 +23,5 @@ export function walk(node: AstEntity, func: (node: AstEntity, nodeId: number, ty
             break;
     }
 
-    func(node, nodeId, 'Exit');
+    func(node, 'Exit');
 }

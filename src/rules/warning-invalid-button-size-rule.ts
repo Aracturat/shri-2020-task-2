@@ -1,7 +1,8 @@
-import { Context } from "../context";
 import { AstObject } from "json-to-ast";
+
+import { Context } from "../context";
 import { Rule } from "../rule";
-import { findBlocks, findByPath, findProperty, tryGetBemInfo } from "../utils";
+import { findBlocks, findByPath, findProperty } from "../utils";
 
 export class WarningInvalidButtonSizeRule implements Rule {
     messages = {
@@ -67,7 +68,7 @@ export class WarningInvalidButtonSizeRule implements Rule {
                     if (sizes[buttonBlockSize] - sizes[textSize] !== 1) {
                         context.report({
                             node: buttonBlock,
-                            messageId: 'WARNING.INVALID_BUTTON_SIZE'
+                            code: 'WARNING.INVALID_BUTTON_SIZE'
                         });
                     }
                 }

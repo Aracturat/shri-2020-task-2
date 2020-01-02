@@ -1,5 +1,6 @@
-import { Context } from "../context";
 import { AstObject } from "json-to-ast";
+
+import { Context } from "../context";
 import { Rule } from "../rule";
 import { findByPath } from "../utils";
 
@@ -9,7 +10,7 @@ export class TextInvalidH3PositionRule implements Rule {
     };
 
     create(context: Context) {
-        let h3Blocks = [];
+        let h3Blocks = new Array<AstObject>();
 
         return {
             'Bem:text': function (node: AstObject) {
@@ -30,11 +31,11 @@ export class TextInvalidH3PositionRule implements Rule {
                         h3Blocks.forEach(h3Block => {
                             context.report({
                                 node: h3Block,
-                                messageId: 'TEXT.INVALID_H3_POSITION'
+                                code: 'TEXT.INVALID_H3_POSITION'
                             });
                         });
 
-                        h3Blocks = [];
+                        h3Blocks.length = 0;
                     }
                 }
             }

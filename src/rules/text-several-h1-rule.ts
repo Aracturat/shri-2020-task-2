@@ -1,7 +1,8 @@
-import { Context } from "../context";
 import { AstObject } from "json-to-ast";
+
+import { Context } from "../context";
 import { Rule } from "../rule";
-import { findBlocks, findByPath, findProperty, tryGetBemInfo } from "../utils";
+import { findByPath } from "../utils";
 
 export class TextSeveralH1Rule implements Rule {
     messages = {
@@ -27,7 +28,7 @@ export class TextSeveralH1Rule implements Rule {
                 if (h1Found) {
                     context.report({
                         node: node,
-                        messageId: 'TEXT.SEVERAL_H1'
+                        code: 'TEXT.SEVERAL_H1'
                     });
                 } else {
                     h1Found = true;

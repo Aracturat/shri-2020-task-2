@@ -1,5 +1,6 @@
-import { Context } from "../context";
 import { AstObject } from "json-to-ast";
+
+import { Context } from "../context";
 import { Rule } from "../rule";
 import { findByPath } from "../utils";
 
@@ -31,7 +32,7 @@ export class WarningInvalidPlaceholderSizeRule implements Rule {
                     if (!['s', 'm', 'l'].includes(placeholderSize)) {
                         context.report({
                             node,
-                            messageId: 'WARNING.INVALID_PLACEHOLDER_SIZE'
+                            code: 'WARNING.INVALID_PLACEHOLDER_SIZE'
                         });
                     }
                 }

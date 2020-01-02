@@ -3,7 +3,7 @@ import * as parseJson from "json-to-ast";
 import { walk } from "./walk";
 import { WalkContext } from "./context";
 import { WarningTextSizesShouldBeEqualRule } from "./rules/warning-text-sizes-should-be-equal-rule";
-import { RuleRegistry } from "./rule";
+import { RuleRegistry } from "./rule-registry";
 
 import { WarningInvalidButtonSizeRule } from "./rules/warning-invalid-button-size-rule";
 import { WarningInvalidButtonPositionRule } from "./rules/warning-invalid-button-position-rule";
@@ -15,8 +15,6 @@ import { TextInvalidH3PositionRule } from "./rules/text-invalid-h3-position-rule
 import { GridTooMuchMarketingBlocks } from "./rules/grid-too-much-marketing-blocks";
 
 export function lint(json: string) {
-    const ast = parseJson(json);
-
     const context = new WalkContext();
     const ruleRegistry = new RuleRegistry(context);
 
@@ -31,27 +29,12 @@ export function lint(json: string) {
 
     ruleRegistry.add(new GridTooMuchMarketingBlocks());
 
-    if (ast) {
-        walk(ast, ruleRegistry.applyCheckers.bind(ruleRegistry));
+    const ast = parseJson(json);
+    if (!ast) {
+        return [];
     }
 
-    let messages = ruleRegistry.getMessages();
+    walk(ast, ruleRegistry.applyCheckers.bind(ruleRegistry));
 
-    return context.getErrors()
-        .map(err => {
-            return {
-                code: err.messageId,
-                error: messages.get(err.messageId),
-                location: {
-                    start: {
-                        line: err.node.loc.start.line,
-                        column: err.node.loc.start.column
-                    },
-                    end: {
-                        line: err.node.loc.end.line,
-                        column: err.node.loc.end.column
-                    }
-                }
-            };
-        });
+    return context.getErrorWithMessages(ruleRegistry.getMessages());
 }

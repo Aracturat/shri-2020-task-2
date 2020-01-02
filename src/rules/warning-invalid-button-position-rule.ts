@@ -1,5 +1,6 @@
-import { Context } from "../context";
 import { AstObject } from "json-to-ast";
+
+import { Context } from "../context";
 import { Rule } from "../rule";
 
 export class WarningInvalidButtonPositionRule implements Rule {
@@ -30,7 +31,7 @@ export class WarningInvalidButtonPositionRule implements Rule {
                     if (button) {
                         context.report({
                             node,
-                            messageId: 'WARNING.INVALID_BUTTON_POSITION'
+                            code: 'WARNING.INVALID_BUTTON_POSITION'
                         });
                     }
                 }

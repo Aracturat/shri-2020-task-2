@@ -1,5 +1,6 @@
-import { Context } from "../context";
 import { AstObject } from "json-to-ast";
+
+import { Context } from "../context";
 import { Rule } from "../rule";
 import { findByPath, findProperty, getBlockName } from "../utils";
 
@@ -39,7 +40,7 @@ export class GridTooMuchMarketingBlocks implements Rule {
                 if (gridBlockInfo.marketingBlockColumns > gridBlockInfo.columns / 2) {
                     context.report({
                         node: gridBlockInfo.node,
-                        messageId: 'GRID.TOO_MUCH_MARKETING_BLOCKS'
+                        code: 'GRID.TOO_MUCH_MARKETING_BLOCKS'
                     });
                 }
             },
