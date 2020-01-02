@@ -64,7 +64,7 @@ export class RuleRegistry {
         if (node.type === 'Object') {
             let bemInfo = tryGetBemInfo(node);
 
-            if (bemInfo.block) {
+            if (bemInfo.block && !bemInfo.elem) {
                 this.applyCheckersByCheckerType(`Bem:${ bemInfo.block }:${ type }`, node, nodeId);
             }
             if (bemInfo.elem) {

@@ -12,6 +12,7 @@ import { WarningInvalidPlaceholderSizeRule } from "./rules/warning-invalid-place
 import { TextSeveralH1Rule } from "./rules/text-several-h1-rule";
 import { TextInvalidH2PositionRule } from "./rules/text-invalid-h2-position-rule";
 import { TextInvalidH3PositionRule } from "./rules/text-invalid-h3-position-rule";
+import { GridTooMuchMarketingBlocks } from "./rules/grid-too-much-marketing-blocks";
 
 export function lint(json: string) {
     const ast = parseJson(json);
@@ -27,6 +28,8 @@ export function lint(json: string) {
     ruleRegistry.add(new TextSeveralH1Rule());
     ruleRegistry.add(new TextInvalidH2PositionRule());
     ruleRegistry.add(new TextInvalidH3PositionRule());
+
+    ruleRegistry.add(new GridTooMuchMarketingBlocks());
 
     if (ast) {
         walk(ast, ruleRegistry.applyCheckers.bind(ruleRegistry));
