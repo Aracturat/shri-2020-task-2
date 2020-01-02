@@ -3,7 +3,7 @@ import { AstObject } from "json-to-ast";
 import { Rule } from "../rule";
 import { findBlocks, findByPath, findProperty, tryGetBemInfo } from "../utils";
 
-export class WarningInvalidButtonSize implements Rule {
+export class WarningInvalidButtonSizeRule implements Rule {
     messages = {
         'WARNING.INVALID_BUTTON_SIZE': 'Размер кнопки блока warning должен быть на 1 шаг больше эталонного'
     };

@@ -2,9 +2,9 @@ import * as parseJson from "json-to-ast";
 
 import { walk } from "./walk";
 import { WalkContext } from "./context";
-import { WarningTextSizesShouldBeEqualRule } from "./rules/rule1";
+import { WarningTextSizesShouldBeEqualRule } from "./rules/warning-text-sizes-should-be-equal-rule";
 import { RuleRegistry } from "./rule";
-import { WarningInvalidButtonSize } from "./rules/rule2";
+import { WarningInvalidButtonSizeRule } from "./rules/warning-invalid-button-size-rule";
 
 export function lint(json: string) {
     const ast = parseJson(json);
@@ -13,7 +13,7 @@ export function lint(json: string) {
     const ruleRegistry = new RuleRegistry(context);
 
     ruleRegistry.add(new WarningTextSizesShouldBeEqualRule());
-    ruleRegistry.add(new WarningInvalidButtonSize());
+    ruleRegistry.add(new WarningInvalidButtonSizeRule());
 
     if (ast) {
         walk(ast, ruleRegistry.applyCheckers.bind(ruleRegistry));
