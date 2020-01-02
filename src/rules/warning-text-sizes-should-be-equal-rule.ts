@@ -15,7 +15,7 @@ export class WarningTextSizesShouldBeEqualRule implements Rule {
                 // Проверяем, есть ли content.
                 const content = findProperty(node, 'content');
 
-                if (!content || content.value.type !== 'Array') {
+                if (!content || content.value.type !== 'Array' || !content.value) {
                     return;
                 }
 
@@ -23,12 +23,12 @@ export class WarningTextSizesShouldBeEqualRule implements Rule {
                 let textBlocks = findBlocks(content.value, 'text');
 
                 let isValid = true;
-                let textSize: string = null;
+                let textSize: string | null = null;
 
                 for (let textBlock of textBlocks) {
                     let sizeEntity = findByPath(textBlock, 'mods.size');
 
-                    if (!sizeEntity || sizeEntity.type !== 'Literal') {
+                    if (!sizeEntity || sizeEntity.type !== 'Literal' || !sizeEntity.value) {
                         isValid = false;
                         break;
                     }

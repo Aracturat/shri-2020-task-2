@@ -26,16 +26,21 @@ export class GridTooMuchMarketingBlocks implements Rule {
                     return;
                 }
 
-                const columns = +columnsEntity.value;
-
-                gridBlockInfos.push({
-                    node,
-                    columns,
-                    marketingBlockColumns: 0
-                });
+                const columns = columnsEntity.value;
+                if (columns) {
+                    gridBlockInfos.push({
+                        node,
+                        columns: +columns,
+                        marketingBlockColumns: 0
+                    });
+                }
             },
             'Bem:grid:Exit': function (node: AstObject) {
                 let gridBlockInfo = gridBlockInfos.pop();
+
+                if (!gridBlockInfo) {
+                    return;
+                }
 
                 if (gridBlockInfo.marketingBlockColumns > gridBlockInfo.columns / 2) {
                     context.report({
@@ -65,18 +70,22 @@ export class GridTooMuchMarketingBlocks implements Rule {
                     return;
                 }
 
-                const innerBlockName = getBlockName(innerBlock).toString();
+                // Пытаемся получить имя блока
+                const innerBlockName = getBlockName(innerBlock);
+                if (!innerBlockName) {
+                    return;
+                }
 
                 // Получаем размер контента
                 const colEntity = findByPath(node, 'elemMods.m-col');
 
-                if (!colEntity || colEntity.type !== 'Literal') {
+                if (!colEntity || colEntity.type !== 'Literal' || !colEntity.value) {
                     return;
                 }
 
                 const col = +colEntity.value;
 
-                if (marketingBlocks.includes(innerBlockName)) {
+                if (marketingBlocks.includes(innerBlockName.toString())) {
                     gridBlockInfos[gridBlockInfos.length - 1].marketingBlockColumns += col;
                 }
             }

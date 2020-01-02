@@ -26,10 +26,13 @@ export class RuleRegistry {
                 this.checkers.set(key, new Array<Checker>());
             }
 
-            if (checker instanceof Array) {
-                this.checkers.get(key).push(...checker);
-            } else {
-                this.checkers.get(key).push(checker);
+            const checkers = this.checkers.get(key);
+            if (checkers) {
+                if (checker instanceof Array) {
+                    checkers.push(...checker);
+                } else {
+                    checkers.push(checker);
+                }
             }
         };
 
@@ -47,7 +50,8 @@ export class RuleRegistry {
         let checkers = this.checkers.get(checkerType);
 
         if (checkers) {
-            checkers.forEach(checker => checker(node));
+            // any используется чтобы работало со strict: true
+            checkers.forEach(checker => checker(node as any));
         }
     }
 

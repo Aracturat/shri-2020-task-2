@@ -10,7 +10,7 @@ export class WarningInvalidButtonPositionRule implements Rule {
 
     create(context: Context) {
         let isInWarningBlock = false;
-        let button: AstObject = null;
+        let button: AstObject | null = null;
 
         return {
             'Bem:warning:Enter': function (node: AstObject) {

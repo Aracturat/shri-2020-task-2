@@ -10,7 +10,7 @@ export class WarningInvalidButtonSizeRule implements Rule {
     };
 
     create(context: Context) {
-        let sizes = {
+        let sizes: { [key: string]: number } = {
             xxxs: 0,
             xxs: 1,
             s: 2,
@@ -49,7 +49,7 @@ export class WarningInvalidButtonSizeRule implements Rule {
                 // Пытаемся получить размер текста.
                 let sizeEntity = findByPath(textBlocks[0], 'mods.size');
 
-                if (!sizeEntity || sizeEntity.type !== 'Literal') {
+                if (!sizeEntity || sizeEntity.type !== 'Literal' || !sizeEntity.value) {
                     return;
                 }
 
@@ -59,7 +59,7 @@ export class WarningInvalidButtonSizeRule implements Rule {
                 for (let buttonBlock of buttonBlocks) {
                     let sizeEntity = findByPath(buttonBlock, 'mods.size');
 
-                    if (!sizeEntity || sizeEntity.type !== 'Literal') {
+                    if (!sizeEntity || sizeEntity.type !== 'Literal' || !sizeEntity.value) {
                         continue;
                     }
 

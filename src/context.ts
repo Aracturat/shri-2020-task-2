@@ -17,7 +17,7 @@ export interface Error {
 
 
 export interface Context {
-    report(errorInfo: ErrorInfo)
+    report(errorInfo: ErrorInfo): void
 }
 
 

@@ -15,7 +15,7 @@ export class TextInvalidH3PositionRule implements Rule {
         return {
             'Bem:text': function (node: AstObject) {
                 let typeEntity = findByPath(node, 'mods.type');
-                if (!typeEntity || typeEntity.type !== 'Literal') {
+                if (!typeEntity || typeEntity.type !== 'Literal' || !typeEntity.value) {
                     return;
                 }
 

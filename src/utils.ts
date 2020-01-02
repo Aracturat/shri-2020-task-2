@@ -1,18 +1,18 @@
 import { AstArray, AstEntity, AstObject, AstProperty } from "json-to-ast";
 
-export function findProperty(object: AstObject, identifier: string): AstProperty {
+export function findProperty(object: AstObject, identifier: string): AstProperty | undefined {
     if (!object || !object.children) {
-        return null;
+        return undefined;
     }
 
     return object.children.find(e => e.key.value === identifier);
 }
 
-export function findPropertyValue(object: AstObject, propertyName: string): AstEntity {
+export function findPropertyValue(object: AstObject, propertyName: string): AstEntity | undefined {
     let property = findProperty(object, propertyName);
 
     if (!property) {
-        return null;
+        return undefined;
     }
 
     return property.value;
@@ -43,18 +43,18 @@ export function findBlocks(array: AstArray, blockName: string): AstObject[] {
     }) as AstObject[];
 }
 
-export function findByPath(object: AstObject, path: string): AstEntity {
+export function findByPath(object: AstObject, path: string): AstEntity | undefined {
     if (!object || !path) {
-        return null;
+        return undefined;
     }
 
     let keys = path.split(".");
 
-    let result: AstEntity = object;
+    let result: AstEntity | undefined = object;
 
     for (let key of keys) {
         if (!result || result.type !== "Object") {
-            return null;
+            return undefined;
         }
 
         result = findPropertyValue(result, key);
@@ -70,13 +70,13 @@ export function tryGetBemInfo(object: AstObject): { block?: string, elem?: strin
 
     const blockProperty = findProperty(object, 'block');
 
-    if (!blockProperty || blockProperty.value.type !== 'Literal') {
+    if (!blockProperty || blockProperty.value.type !== 'Literal' || !blockProperty.value.value) {
         return {};
     }
 
     const elemProperty = findProperty(object, 'elem');
 
-    if (!elemProperty || elemProperty.value.type !== 'Literal') {
+    if (!elemProperty || elemProperty.value.type !== 'Literal' || !elemProperty.value.value) {
         return {
             block: blockProperty.value.value.toString(),
         };

@@ -1,9 +1,14 @@
-import { AstEntity } from "json-to-ast";
+import { AstArray, AstEntity, AstIdentifier, AstLiteral, AstObject, AstProperty } from "json-to-ast";
 
 import { Context } from "./context";
 
+export type Checker =
+    | ((node: AstObject) => void)
+    | ((node: AstArray) => void)
+    | ((node: AstLiteral) => void)
+    | ((node: AstIdentifier) => void)
+    | ((node: AstProperty) => void)
 
-export type Checker = (node: AstEntity) => void
 
 export interface Rule {
     messages: { [code: string]: string };

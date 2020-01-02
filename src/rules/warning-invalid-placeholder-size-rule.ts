@@ -23,7 +23,7 @@ export class WarningInvalidPlaceholderSizeRule implements Rule {
                 if (isInWarningBlock) {
                     let sizeEntity = findByPath(node, 'mods.size');
 
-                    if (!sizeEntity || sizeEntity.type !== 'Literal') {
+                    if (!sizeEntity || sizeEntity.type !== 'Literal' || !sizeEntity.value) {
                         return;
                     }
 
