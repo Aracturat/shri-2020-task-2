@@ -10,4 +10,4 @@ let json = `
 }
 `;
 
-console.log(lint(json));
+console.log(JSON.stringify(lint(json), null, 2));

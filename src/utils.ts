@@ -1,4 +1,4 @@
-import { AstObject, AstProperty, AstEntity, AstArray } from "json-to-ast";
+import { AstArray, AstEntity, AstObject, AstProperty } from "json-to-ast";
 
 export function findProperty(object: AstObject, identifier: string): AstProperty {
     if (!object || !object.children) {
@@ -63,18 +63,27 @@ export function findByPath(object: AstObject, path: string): AstEntity {
     return result;
 }
 
-export function getAstObjectType(object: AstObject): string {
+export function tryGetBemInfo(object: AstObject): { block?: string, elem?: string } {
     if (!object) {
-        return 'Object';
+        return {};
     }
 
     const blockProperty = findProperty(object, 'block');
 
-    if (!blockProperty) {
-        return 'Object';
+    if (!blockProperty || blockProperty.value.type !== 'Literal') {
+        return {};
     }
 
     const elemProperty = findProperty(object, 'elem');
 
-    return elemProperty ? 'Element' : 'Block';
+    if (!elemProperty || elemProperty.value.type !== 'Literal') {
+        return {
+            block: blockProperty.value.value.toString(),
+        };
+    }
+
+    return {
+        block: blockProperty.value.value.toString(),
+        elem: elemProperty.value.value.toString()
+    };
 }

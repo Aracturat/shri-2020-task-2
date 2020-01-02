@@ -1,10 +1,10 @@
 import { Context } from "../context";
 import { AstObject } from "json-to-ast";
 import { Rule } from "../rule";
-import { findBlocks, findByPath, findProperty } from "../utils";
+import { findBlocks, findByPath, findProperty, tryGetBemInfo } from "../utils";
 
 export class WarningInvalidButtonSize implements Rule {
-    messages: {
+    messages = {
         'WARNING.INVALID_BUTTON_SIZE': 'Размер кнопки блока warning должен быть на 1 шаг больше эталонного'
     };
 
@@ -23,7 +23,12 @@ export class WarningInvalidButtonSize implements Rule {
         };
 
         return {
-            'Block:warning': function (node: AstObject) {
+            'Object': function (node: AstObject) {
+                let bemInfo = tryGetBemInfo(node);
+                if (bemInfo.block !== 'warning') {
+                    return;
+                }
+
                 // Проверяем, есть ли content.
                 const content = findProperty(node, 'content');
 

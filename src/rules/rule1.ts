@@ -1,16 +1,21 @@
 import { Context } from "../context";
 import { AstObject } from "json-to-ast";
 import { Rule } from "../rule";
-import { findBlocks, findByPath, findProperty } from "../utils";
+import { findBlocks, findByPath, findProperty, tryGetBemInfo } from "../utils";
 
 export class WarningTextSizesShouldBeEqualRule implements Rule {
-    messages: {
+    messages = {
         'WARNING.TEXT_SIZES_SHOULD_BE_EQUAL': 'Тексты в блоке warning должны быть одного размера'
     };
 
     create(context: Context) {
         return {
-            'Block:warning': function (node: AstObject) {
+            'Object': function (node: AstObject) {
+                let bemInfo = tryGetBemInfo(node);
+                if (bemInfo.block !== 'warning') {
+                    return;
+                }
+
                 // Проверяем, есть ли content.
                 const content = findProperty(node, 'content');
 
