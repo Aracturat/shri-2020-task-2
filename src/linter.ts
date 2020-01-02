@@ -4,9 +4,12 @@ import { walk } from "./walk";
 import { WalkContext } from "./context";
 import { WarningTextSizesShouldBeEqualRule } from "./rules/warning-text-sizes-should-be-equal-rule";
 import { RuleRegistry } from "./rule";
+
 import { WarningInvalidButtonSizeRule } from "./rules/warning-invalid-button-size-rule";
-import { TextSeveralH1Rule } from "./rules/text-several-h1-rule";
 import { WarningInvalidButtonPositionRule } from "./rules/warning-invalid-button-position-rule";
+import { WarningInvalidPlaceholderSizeRule } from "./rules/warning-invalid-placeholder-size-rule";
+
+import { TextSeveralH1Rule } from "./rules/text-several-h1-rule";
 
 export function lint(json: string) {
     const ast = parseJson(json);
@@ -16,7 +19,9 @@ export function lint(json: string) {
 
     ruleRegistry.add(new WarningTextSizesShouldBeEqualRule());
     ruleRegistry.add(new WarningInvalidButtonSizeRule());
-    ruleRegistry.add(new WarningInvalidButtonPositionRule())
+    ruleRegistry.add(new WarningInvalidButtonPositionRule());
+    ruleRegistry.add(new WarningInvalidPlaceholderSizeRule());
+
     ruleRegistry.add(new TextSeveralH1Rule());
 
     if (ast) {
