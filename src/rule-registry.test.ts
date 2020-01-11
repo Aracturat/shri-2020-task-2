@@ -88,11 +88,11 @@ describe('should call correct checkers', () => {
     });
 
     test('object with block property', () => {
-        const array: any = {
+        const object = {
             "block": "value"
         };
 
-        const result = linter(array);
+        const result = linter(object);
 
         expect(result).toEqual([
             'Object:Enter',

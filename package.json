@@ -5,7 +5,8 @@
   "main": "templater.js",
   "scripts": {
     "dev": "webpack -w --mode=development",
-    "build": "webpack --mode=production"
+    "build": "webpack --mode=production",
+    "test": "jest"
   },
   "repository": {
     "type": "git",

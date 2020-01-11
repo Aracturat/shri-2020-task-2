@@ -1,4 +1,5 @@
 import * as parseJson from "json-to-ast";
+import { AstEntity } from "json-to-ast";
 
 import { walk } from "./walk";
 import { Error } from "./error";
@@ -18,14 +19,10 @@ import {
     WarningInvalidPlaceholderSizeRule,
     WarningTextSizesShouldBeEqualRule
 } from "./rules";
-import AstEntity = JsonToAst.AstEntity;
 
-/**
- * Проверить на ошибки json
- * @param json строка, содержащая json
- */
-export function lint(json: string): Array<Error> {
-    const linter = createLinter(
+
+export function getAllRules(): Array<Rule> {
+    return [
         new WarningTextSizesShouldBeEqualRule(),
         new WarningInvalidButtonSizeRule(),
         new WarningInvalidButtonPositionRule(),
@@ -39,7 +36,16 @@ export function lint(json: string): Array<Error> {
 
         new BlockNameIsRequiredRule(),
         new UppercaseNamesAreForbiddenRule()
-    );
+    ];
+}
+
+/**
+ * Проверить на ошибки json
+ * @param json строка, содержащая json
+ */
+export function lint(json: string): Array<Error> {
+    const rules = getAllRules();
+    const linter = createLinter(...rules);
 
     return linter(json);
 }
