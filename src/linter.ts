@@ -1,7 +1,7 @@
 import * as parseJson from "json-to-ast";
 
 import { walk } from "./walk";
-import { WalkContext } from "./context";
+import { Error, WalkContext } from "./context";
 import { WarningTextSizesShouldBeEqualRule } from "./rules/warning-text-sizes-should-be-equal-rule";
 import { RuleRegistry } from "./rule-registry";
 
@@ -13,28 +13,41 @@ import { TextSeveralH1Rule } from "./rules/text-several-h1-rule";
 import { TextInvalidH2PositionRule } from "./rules/text-invalid-h2-position-rule";
 import { TextInvalidH3PositionRule } from "./rules/text-invalid-h3-position-rule";
 import { GridTooMuchMarketingBlocks } from "./rules/grid-too-much-marketing-blocks";
+import { Rule } from "./rule";
 
-export function lint(json: string) {
+export function lint(json: string): Array<Error> {
+    const linter = initLinter(
+        new WarningTextSizesShouldBeEqualRule(),
+        new WarningInvalidButtonSizeRule(),
+        new WarningInvalidButtonPositionRule(),
+        new WarningInvalidPlaceholderSizeRule(),
+
+        new TextSeveralH1Rule(),
+        new TextInvalidH2PositionRule(),
+        new TextInvalidH3PositionRule(),
+
+        new GridTooMuchMarketingBlocks()
+    );
+
+    return linter(json);
+}
+
+export function initLinter(...rules: Rule[]): (json: string) => Array<Error> {
     const context = new WalkContext();
+
     const ruleRegistry = new RuleRegistry(context);
 
-    ruleRegistry.add(new WarningTextSizesShouldBeEqualRule());
-    ruleRegistry.add(new WarningInvalidButtonSizeRule());
-    ruleRegistry.add(new WarningInvalidButtonPositionRule());
-    ruleRegistry.add(new WarningInvalidPlaceholderSizeRule());
+    rules.forEach(rule => ruleRegistry.add(rule));
 
-    ruleRegistry.add(new TextSeveralH1Rule());
-    ruleRegistry.add(new TextInvalidH2PositionRule());
-    ruleRegistry.add(new TextInvalidH3PositionRule());
+    return function (json: string) {
+        const ast = parseJson(json);
+        if (!ast) {
+            return [];
+        }
 
-    ruleRegistry.add(new GridTooMuchMarketingBlocks());
+        walk(ast, ruleRegistry.applyCheckers.bind(ruleRegistry));
 
-    const ast = parseJson(json);
-    if (!ast) {
-        return [];
-    }
-
-    walk(ast, ruleRegistry.applyCheckers.bind(ruleRegistry));
-
-    return context.getErrorWithMessages(ruleRegistry.getMessages());
+        return context.getErrorWithMessages(ruleRegistry.getMessages());
+    };
 }
+
