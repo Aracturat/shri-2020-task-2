@@ -21,7 +21,7 @@ export function findPropertyValue(object: AstObject, propertyName: string): AstE
 export function getBlockName(node: AstObject) {
     const block = findProperty(node, 'block');
     if (!block) {
-        return null;
+        return undefined;
     }
 
     if (block.value.type === 'Literal') {
