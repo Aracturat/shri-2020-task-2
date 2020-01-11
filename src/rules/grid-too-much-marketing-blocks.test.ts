@@ -1,8 +1,8 @@
-import { initLinter } from "../linter";
+import { createLinter } from "../linter";
 import { GridTooMuchMarketingBlocks } from "./grid-too-much-marketing-blocks";
 
 function lint(object: object) {
-    const linter = initLinter(new GridTooMuchMarketingBlocks());
+    const linter = createLinter(new GridTooMuchMarketingBlocks());
 
     return linter(JSON.stringify(object, null, 4));
 }

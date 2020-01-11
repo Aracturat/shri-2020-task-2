@@ -63,18 +63,29 @@ export function findByPath(object: AstObject, path: string): AstEntity | undefin
     return result;
 }
 
-export function tryGetBemInfo(object: AstObject): { block?: string, elem?: string } {
-    if (!object) {
+export function tryGetBemInfo(node: AstObject, parent: AstEntity | null = null): { block?: string, elem?: string } {
+    if (!node) {
         return {};
     }
 
-    const blockProperty = findProperty(object, 'block');
+    // Если есть родитель, то проверяем, что объект не является mods или elemMods.
+    if (parent) {
+        if (parent.type === 'Property') {
+            if (parent.key.value === 'mods' || parent.key.value === 'elemMods') {
+                return {};
+            }
+        }
+    }
+
+    // Проверяем наличие поля block.
+    const blockProperty = findProperty(node, 'block');
 
     if (!blockProperty || blockProperty.value.type !== 'Literal' || !blockProperty.value.value) {
         return {};
     }
 
-    const elemProperty = findProperty(object, 'elem');
+    // Проверяем наличие поля elem.
+    const elemProperty = findProperty(node, 'elem');
 
     if (!elemProperty || elemProperty.value.type !== 'Literal' || !elemProperty.value.value) {
         return {

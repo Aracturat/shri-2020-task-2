@@ -1,8 +1,8 @@
 import { TextSeveralH1Rule } from "./text-several-h1-rule";
-import { initLinter } from "../linter";
+import { createLinter } from "../linter";
 
 function lint(object: object) {
-    const linter = initLinter(new TextSeveralH1Rule());
+    const linter = createLinter(new TextSeveralH1Rule());
 
     return linter(JSON.stringify(object, null, 4));
 }

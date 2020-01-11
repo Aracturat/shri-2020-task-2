@@ -46,26 +46,26 @@ export class RuleRegistry {
             });
     }
 
-    private applyCheckersByCheckerType(checkerType: string, node: AstEntity) {
+    private applyCheckersByCheckerType(checkerType: string, node: AstEntity, parent: AstEntity | null) {
         let checkers = this.checkers.get(checkerType);
 
         if (checkers) {
             // any используется чтобы работало со strict: true
-            checkers.forEach(checker => checker(node as any));
+            checkers.forEach(checker => checker(node as any, parent));
         }
     }
 
-    applyCheckers(node: AstEntity, type: 'Enter' | 'Exit') {
-        this.applyCheckersByCheckerType(`${ node.type }:${ type }`, node);
+    applyCheckers(node: AstEntity, parent: AstEntity | null, type: 'Enter' | 'Exit') {
+        this.applyCheckersByCheckerType(`${ node.type }:${ type }`, node, parent);
 
         if (node.type === 'Object') {
-            let bemInfo = tryGetBemInfo(node);
+            let bemInfo = tryGetBemInfo(node, parent);
 
             if (bemInfo.block && !bemInfo.elem) {
-                this.applyCheckersByCheckerType(`Bem:${ bemInfo.block }:${ type }`, node);
+                this.applyCheckersByCheckerType(`Bem:${ bemInfo.block }:${ type }`, node, parent);
             }
             if (bemInfo.block && bemInfo.elem) {
-                this.applyCheckersByCheckerType(`Bem:${ bemInfo.block }__${ bemInfo.elem }:${ type }`, node);
+                this.applyCheckersByCheckerType(`Bem:${ bemInfo.block }__${ bemInfo.elem }:${ type }`, node, parent);
             }
         }
     }

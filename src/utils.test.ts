@@ -187,4 +187,47 @@ describe('tryGetBemInfo', () => {
 
         expect(result).toEqual({});
     });
+
+    it('returns empty object if parent mods property', () => {
+        const block = {
+            'block': 'parent',
+            'mods': {
+                'block': 'test'
+            }
+        };
+
+        const object = parseJson(JSON.stringify(block)) as JsonToAst.AstObject;
+
+        const property = findProperty(object, 'mods');
+
+        expect(property).toBeDefined();
+
+        if (property && property.value.type === 'Object') {
+            const result = tryGetBemInfo(property.value, property);
+
+            expect(result).toEqual({});
+        }
+    });
+
+    it('returns empty object if parent elemMods property', () => {
+        const block = {
+            'block': 'parent',
+            'elem': 'elem',
+            'elemMods': {
+                'block': 'test'
+            }
+        };
+
+        const object = parseJson(JSON.stringify(block)) as JsonToAst.AstObject;
+
+        const property = findProperty(object, 'elemMods');
+
+        expect(property).toBeDefined();
+
+        if (property && property.value.type === 'Object') {
+            const result = tryGetBemInfo(property.value, property);
+
+            expect(result).toEqual({});
+        }
+    });
 });

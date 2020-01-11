@@ -1,8 +1,8 @@
 import { TextInvalidH3PositionRule } from "./text-invalid-h3-position-rule";
-import { initLinter } from "../linter";
+import { createLinter } from "../linter";
 
 function lint(object: object) {
-    const linter = initLinter(new TextInvalidH3PositionRule());
+    const linter = createLinter(new TextInvalidH3PositionRule());
 
     return linter(JSON.stringify(object, null, 4));
 }

@@ -1,8 +1,8 @@
-import { initLinter } from "../linter";
+import { createLinter } from "../linter";
 import { WarningInvalidButtonSizeRule } from "./warning-invalid-button-size-rule";
 
 function lint(object: object) {
-    const linter = initLinter(new WarningInvalidButtonSizeRule());
+    const linter = createLinter(new WarningInvalidButtonSizeRule());
 
     return linter(JSON.stringify(object, null, 4));
 }

@@ -1,21 +1,31 @@
 import { AstEntity } from "json-to-ast";
 
-export function walk(node: AstEntity, func: (node: AstEntity, type: 'Enter' | 'Exit') => void) {
-    func(node, 'Enter');
+/**
+ * Обойти все дерево в глубину.
+ * @param func функция, которая будет вызвана на каждой ноде дважды (первый раз с type = 'Enter', второй с type = 'Exit')
+ * @param node текущая узел дерева
+ * @param parent опционально, родитель текущего узла дерева
+ */
+export function walk(
+    func: (node: AstEntity, parent: AstEntity | null, type: 'Enter' | 'Exit') => void,
+    node: AstEntity,
+    parent: AstEntity | null = null
+) {
+    func(node, parent, 'Enter');
 
     switch (node.type) {
         case 'Array':
         case 'Object':
-            if (node.children) {
+            if (node.children && node.children.length > 0) {
                 node.children.forEach((item: AstEntity) => {
-                    walk(item, func);
+                    walk(func, item, node);
                 });
             }
 
             break;
         case 'Property':
-            walk(node.key, func);
-            walk(node.value, func);
+            walk(func, node.key, node);
+            walk(func, node.value, node);
 
             break;
         case 'Literal':
@@ -23,5 +33,5 @@ export function walk(node: AstEntity, func: (node: AstEntity, type: 'Enter' | 'E
             break;
     }
 
-    func(node, 'Exit');
+    func(node, parent,'Exit');
 }

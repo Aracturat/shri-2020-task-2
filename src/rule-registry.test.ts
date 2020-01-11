@@ -51,7 +51,7 @@ function initLinter(types: string[]): (object: object) => Array<string> {
             return [];
         }
 
-        walk(ast, ruleRegistry.applyCheckers.bind(ruleRegistry));
+        walk(ruleRegistry.applyCheckers.bind(ruleRegistry), ast);
 
         return context.errors;
     };

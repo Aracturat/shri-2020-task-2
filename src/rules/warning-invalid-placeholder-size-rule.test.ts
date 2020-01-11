@@ -1,8 +1,8 @@
-import { initLinter } from "../linter";
+import { createLinter } from "../linter";
 import { WarningInvalidPlaceholderSizeRule } from "./warning-invalid-placeholder-size-rule";
 
 function lint(object: object) {
-    const linter = initLinter(new WarningInvalidPlaceholderSizeRule());
+    const linter = createLinter(new WarningInvalidPlaceholderSizeRule());
 
     return linter(JSON.stringify(object, null, 4));
 }

@@ -1,8 +1,8 @@
-import { initLinter } from "../linter";
+import { createLinter } from "../linter";
 import { TextInvalidH2PositionRule } from "./text-invalid-h2-position-rule";
 
 function lint(object: object) {
-    const linter = initLinter(new TextInvalidH2PositionRule());
+    const linter = createLinter(new TextInvalidH2PositionRule());
 
     return linter(JSON.stringify(object, null, 4));
 }

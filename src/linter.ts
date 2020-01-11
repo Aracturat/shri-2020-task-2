@@ -17,8 +17,12 @@ import {
     WarningTextSizesShouldBeEqualRule
 } from "./rules";
 
+/**
+ * Проверить на ошибки json
+ * @param json строка, содержащая json
+ */
 export function lint(json: string): Array<Error> {
-    const linter = initLinter(
+    const linter = createLinter(
         new WarningTextSizesShouldBeEqualRule(),
         new WarningInvalidButtonSizeRule(),
         new WarningInvalidButtonPositionRule(),
@@ -34,7 +38,11 @@ export function lint(json: string): Array<Error> {
     return linter(json);
 }
 
-export function initLinter(...rules: Rule[]): (json: string) => Array<Error> {
+/**
+ * Создать линтер с заданными правилами.
+ * @param rules правила
+ */
+export function createLinter(...rules: Rule[]): (json: string) => Array<Error> {
     const context = new WalkContext();
 
     const ruleRegistry = new RuleRegistry(context);
@@ -47,7 +55,7 @@ export function initLinter(...rules: Rule[]): (json: string) => Array<Error> {
             return [];
         }
 
-        walk(ast, ruleRegistry.applyCheckers.bind(ruleRegistry));
+        walk(ruleRegistry.applyCheckers.bind(ruleRegistry), ast);
 
         return context.getErrorWithMessages(ruleRegistry.getMessages());
     };

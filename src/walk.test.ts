@@ -10,7 +10,7 @@ test('walk', () => {
 
     const nodeTypes: string[] = [];
 
-    walk(ast, (node, type) => nodeTypes.push(`${ node.type }:${type}`));
+    walk((node, parent, type) => nodeTypes.push(`${ node.type }:${ type }`), ast);
 
     expect(nodeTypes).toEqual([
         'Array:Enter',
