@@ -7,7 +7,7 @@ import { WalkContext } from "./context";
 import { Rule } from "./rule";
 import { RuleRegistry } from "./rule-registry";
 import {
-    GridTooMuchMarketingBlocks,
+    GridTooMuchMarketingBlocksRule,
     TextInvalidH2PositionRule,
     TextInvalidH3PositionRule,
     TextSeveralH1Rule,
@@ -32,7 +32,7 @@ export function lint(json: string): Array<Error> {
         new TextInvalidH2PositionRule(),
         new TextInvalidH3PositionRule(),
 
-        new GridTooMuchMarketingBlocks()
+        new GridTooMuchMarketingBlocksRule()
     );
 
     return linter(json);

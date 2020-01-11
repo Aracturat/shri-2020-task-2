@@ -4,7 +4,7 @@ import { Context } from "../context";
 import { Rule } from "../rule";
 import { findByPath, findProperty, getBlockName } from "../utils";
 
-export class GridTooMuchMarketingBlocks implements Rule {
+export class GridTooMuchMarketingBlocksRule implements Rule {
     messages = {
         'GRID.TOO_MUCH_MARKETING_BLOCKS': 'Маркетинговые блоки должны занимать не больше половины от всех колонок блока grid'
     };

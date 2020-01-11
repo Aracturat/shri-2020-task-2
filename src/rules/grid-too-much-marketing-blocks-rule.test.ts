@@ -1,8 +1,8 @@
 import { createLinter } from "../linter";
-import { GridTooMuchMarketingBlocks } from "./grid-too-much-marketing-blocks";
+import { GridTooMuchMarketingBlocksRule } from "./grid-too-much-marketing-blocks-rule";
 
 function lint(object: object) {
-    const linter = createLinter(new GridTooMuchMarketingBlocks());
+    const linter = createLinter(new GridTooMuchMarketingBlocksRule());
 
     return linter(JSON.stringify(object, null, 4));
 }
