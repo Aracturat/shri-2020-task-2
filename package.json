@@ -1,5 +1,5 @@
 {
-  "name": "shri-2020-task-1",
+  "name": "shri-2020-task-2",
   "version": "1.0.0",
   "description": "В этом репозитории находятся материалы тестового задания «Напишите линтер» для [16-й Школы разработки интерфейсов](https://yandex.ru/promo/academy/shri) (зима 2020, Москва)",
   "main": "templater.js",
@@ -26,6 +26,9 @@
     "webpack-cli": "^3.3.10"
   },
   "devDependencies": {
+    "@types/jest": "^24.0.25",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.3.0",
     "ts-loader": "^6.2.1",
     "typescript": "^3.7.4"
   }
