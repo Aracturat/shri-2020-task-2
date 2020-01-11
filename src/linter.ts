@@ -14,7 +14,9 @@ import {
     WarningInvalidButtonPositionRule,
     WarningInvalidButtonSizeRule,
     WarningInvalidPlaceholderSizeRule,
-    WarningTextSizesShouldBeEqualRule
+    WarningTextSizesShouldBeEqualRule,
+    BlockNameIsRequiredRule,
+    UppercaseNamesAreForbiddenRule
 } from "./rules";
 
 /**
@@ -32,7 +34,10 @@ export function lint(json: string): Array<Error> {
         new TextInvalidH2PositionRule(),
         new TextInvalidH3PositionRule(),
 
-        new GridTooMuchMarketingBlocksRule()
+        new GridTooMuchMarketingBlocksRule(),
+
+        new BlockNameIsRequiredRule(),
+        new UppercaseNamesAreForbiddenRule()
     );
 
     return linter(json);
