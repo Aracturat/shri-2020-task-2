@@ -1,4 +1,4 @@
-import { AstArray, AstEntity, AstIdentifier, AstLiteral, AstObject, AstProperty } from "json-to-ast";
+import { AstArray, AstIdentifier, AstLiteral, AstObject, AstProperty } from "json-to-ast";
 
 import { Context } from "./context";
 

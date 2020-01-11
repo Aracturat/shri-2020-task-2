@@ -1,25 +1,14 @@
 import { AstEntity } from "json-to-ast";
+import { Error } from "./error";
 
 export interface ErrorInfo {
     node: AstEntity,
     code: string
 }
 
-export interface Error {
-    code: string;
-    error: string;
-
-    location: {
-        start: { line: number; column: number; };
-        end: { line: number; column: number; };
-    };
-}
-
-
 export interface Context {
     report(errorInfo: ErrorInfo): void
 }
-
 
 export class WalkContext implements Context {
     private errorInfos = new Array<ErrorInfo>();
