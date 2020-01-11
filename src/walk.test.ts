@@ -2,9 +2,9 @@ import * as parseJson from "json-to-ast";
 import { walk } from './walk';
 
 test('walk', () => {
-    const object = {
+    const object = [{
         'block': 'name'
-    };
+    }];
 
     let ast = parseJson(JSON.stringify(object));
 
@@ -13,6 +13,7 @@ test('walk', () => {
     walk(ast, (node, type) => nodeTypes.push(`${ node.type }:${type}`));
 
     expect(nodeTypes).toEqual([
+        'Array:Enter',
         'Object:Enter',
         'Property:Enter',
         'Identifier:Enter',
@@ -20,6 +21,7 @@ test('walk', () => {
         'Literal:Enter',
         'Literal:Exit',
         'Property:Exit',
-        'Object:Exit'
+        'Object:Exit',
+        'Array:Exit'
     ]);
 });
