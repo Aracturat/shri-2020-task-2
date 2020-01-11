@@ -7,17 +7,18 @@ import { WalkContext } from "./context";
 import { Rule } from "./rule";
 import { RuleRegistry } from "./rule-registry";
 import {
+    BlockNameIsRequiredRule,
     GridTooMuchMarketingBlocksRule,
     TextInvalidH2PositionRule,
     TextInvalidH3PositionRule,
     TextSeveralH1Rule,
+    UppercaseNamesAreForbiddenRule,
     WarningInvalidButtonPositionRule,
     WarningInvalidButtonSizeRule,
     WarningInvalidPlaceholderSizeRule,
-    WarningTextSizesShouldBeEqualRule,
-    BlockNameIsRequiredRule,
-    UppercaseNamesAreForbiddenRule
+    WarningTextSizesShouldBeEqualRule
 } from "./rules";
+import AstEntity = JsonToAst.AstEntity;
 
 /**
  * Проверить на ошибки json
@@ -55,7 +56,15 @@ export function createLinter(...rules: Rule[]): (json: string) => Array<Error> {
     rules.forEach(rule => ruleRegistry.add(rule));
 
     return function (json: string) {
-        const ast = parseJson(json);
+        let ast: AstEntity | null = null;
+
+        // Может быть невалидный json
+        try {
+            ast = parseJson(json);
+        } catch {
+
+        }
+
         if (!ast) {
             return [];
         }
@@ -65,4 +74,3 @@ export function createLinter(...rules: Rule[]): (json: string) => Array<Error> {
         return context.getErrorWithMessages(ruleRegistry.getMessages());
     };
 }
-
