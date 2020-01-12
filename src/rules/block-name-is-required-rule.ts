@@ -6,7 +6,7 @@ import { findProperty } from "../utils";
 
 export class BlockNameIsRequiredRule implements Rule {
     messages = {
-        'BLOCK_NAME_IS_REQUIRED': 'Запрещены названия полей в верхнем регистре'
+        'BLOCK_NAME_IS_REQUIRED': 'В каждом объекте должно быть поле block'
     };
 
     create(context: Context) {
