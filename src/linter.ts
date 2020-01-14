@@ -2,7 +2,7 @@ import * as parseJson from "json-to-ast";
 import { AstEntity } from "json-to-ast";
 
 import { walk } from "./walk";
-import { Error } from "./error";
+import { Problem } from "./problem";
 import { WalkContext } from "./context";
 
 import { Rule } from "./rule";
@@ -43,7 +43,7 @@ export function getAllRules(): Array<Rule> {
  * Проверить на ошибки json
  * @param json строка, содержащая json
  */
-export function lint(json: string): Array<Error> {
+export function lint(json: string): Array<Problem> {
     const rules = getAllRules();
     const linter = createLinter(...rules);
 
@@ -54,7 +54,7 @@ export function lint(json: string): Array<Error> {
  * Создать линтер с заданными правилами.
  * @param rules правила
  */
-export function createLinter(...rules: Rule[]): (json: string) => Array<Error> {
+export function createLinter(...rules: Rule[]): (json: string) => Array<Problem> {
     const context = new WalkContext();
 
     const ruleRegistry = new RuleRegistry(context);
@@ -77,6 +77,6 @@ export function createLinter(...rules: Rule[]): (json: string) => Array<Error> {
 
         walk(ruleRegistry.applyCheckers.bind(ruleRegistry), ast);
 
-        return context.getErrorWithMessages(ruleRegistry.getMessages());
+        return context.getProblems(ruleRegistry.getMessages());
     };
 }

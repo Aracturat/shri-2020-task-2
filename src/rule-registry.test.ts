@@ -1,15 +1,15 @@
 import { Rule } from './rule';
-import { Context, ErrorInfo } from "./context";
+import { Context, ProblemInfo } from "./context";
 import { RuleRegistry } from "./rule-registry";
 import * as parseJson from "json-to-ast";
 import { walk } from "./walk";
 import AstEntity = JsonToAst.AstEntity;
 
 class TestContext implements Context {
-    public errors = new Array<string>();
+    public problemCodes = new Array<string>();
 
-    report(errorInfo: ErrorInfo) {
-        this.errors.push(errorInfo.code);
+    report(problemInfo: ProblemInfo) {
+        this.problemCodes.push(problemInfo.code);
     }
 }
 
@@ -53,7 +53,7 @@ function initLinter(types: string[]): (object: object) => Array<string> {
 
         walk(ruleRegistry.applyCheckers.bind(ruleRegistry), ast);
 
-        return context.errors;
+        return context.problemCodes;
     };
 }
 

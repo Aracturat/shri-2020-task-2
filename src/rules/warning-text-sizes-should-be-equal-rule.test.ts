@@ -35,7 +35,7 @@ test('lint incorrect json', () => {
     expect(result.length).toEqual(1);
 });
 
-test('lint incorrect json and return one error for block', () => {
+test('lint incorrect json and return one problem for block', () => {
     const object = {
         "block": "warning",
         "content": [

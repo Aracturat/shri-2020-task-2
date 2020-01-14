@@ -1,4 +1,4 @@
-export interface Error {
+export interface Problem {
     code: string;
     error: string;
 

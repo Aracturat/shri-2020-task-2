@@ -1,39 +1,39 @@
 import { AstEntity } from "json-to-ast";
-import { Error } from "./error";
+import { Problem } from "./problem";
 
-export interface ErrorInfo {
+export interface ProblemInfo {
     node: AstEntity,
     code: string
 }
 
 export interface Context {
-    report(errorInfo: ErrorInfo): void
+    report(problemInfo: ProblemInfo): void
 }
 
 export class WalkContext implements Context {
-    private errorInfos = new Array<ErrorInfo>();
+    private problemInfos = new Array<ProblemInfo>();
 
-    report(errorInfo: ErrorInfo) {
-        this.errorInfos.push(errorInfo);
+    report(problemInfo: ProblemInfo) {
+        this.problemInfos.push(problemInfo);
     }
 
-    getErrorWithMessages(messages: Map<string, string>): Array<Error> {
-        return this.errorInfos
-            .map(err => {
+    getProblems(messages: Map<string, string>): Array<Problem> {
+        return this.problemInfos
+            .map(pi => {
                 return {
-                    code: err.code,
-                    error: messages.get(err.code),
+                    code: pi.code,
+                    error: messages.get(pi.code) ?? "Неизвестная ошибка",
                     location: {
                         start: {
-                            line: err.node.loc.start.line,
-                            column: err.node.loc.start.column
+                            line: pi.node.loc.start.line,
+                            column: pi.node.loc.start.column
                         },
                         end: {
-                            line: err.node.loc.end.line,
-                            column: err.node.loc.end.column
+                            line: pi.node.loc.end.line,
+                            column: pi.node.loc.end.column
                         }
                     }
-                } as Error;
+                };
             });
     }
 }
