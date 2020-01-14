@@ -1,5 +1,6 @@
 import { AstEntity } from "json-to-ast";
 
+
 /**
  * Обход дерева в глубину.
  * @param func функция, которая будет вызвана на каждой ноде дважды (первый раз с type = 'Enter', второй с type = 'Exit')

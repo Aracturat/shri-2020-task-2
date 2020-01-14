@@ -4,6 +4,7 @@ import { Context } from "../context";
 import { Rule } from "../rule";
 import { findByPath } from "../utils";
 
+
 export class TextInvalidH3PositionRule implements Rule {
     messages = {
         'TEXT.INVALID_H3_POSITION': 'Заголовок третьего уровня (блок text с модификатором type h3) не может находиться перед заголовком второго уровня на том же или более глубоком уровне вложенности'

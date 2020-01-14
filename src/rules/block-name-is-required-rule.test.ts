@@ -1,6 +1,7 @@
 import { createLinter } from "../linter";
 import { BlockNameIsRequiredRule } from "./block-name-is-required-rule";
 
+
 function lint(object: object) {
     const linter = createLinter(new BlockNameIsRequiredRule());
 

@@ -4,6 +4,7 @@ import { Context } from "../context";
 import { Rule } from "../rule";
 import { findByPath } from "../utils";
 
+
 export class TextSeveralH1Rule implements Rule {
     messages = {
         'TEXT.SEVERAL_H1': 'Заголовок первого уровня (блок text с модификатором type h1) на странице должен быть единственным'

@@ -3,6 +3,7 @@ import { AstObject } from "json-to-ast";
 import { Context } from "../context";
 import { Rule } from "../rule";
 
+
 export class WarningInvalidButtonPositionRule implements Rule {
     messages = {
         'WARNING.INVALID_BUTTON_POSITION': 'Блок button в блоке warning не может находиться перед блоком placeholder на том же или более глубоком уровне вложенности'

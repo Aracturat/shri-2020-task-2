@@ -1,6 +1,7 @@
 import { createLinter } from "../linter";
 import { WarningTextSizesShouldBeEqualRule } from "./warning-text-sizes-should-be-equal-rule";
 
+
 function lint(object: object) {
     const linter = createLinter(new WarningTextSizesShouldBeEqualRule());
 

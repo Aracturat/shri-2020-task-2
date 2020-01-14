@@ -4,6 +4,7 @@ import { Context } from "../context";
 import { Rule } from "../rule";
 import { findBlocks, findByPath, findProperty } from "../utils";
 
+
 export class WarningTextSizesShouldBeEqualRule implements Rule {
     messages = {
         'WARNING.TEXT_SIZES_SHOULD_BE_EQUAL': 'Тексты в блоке warning должны быть одного размера'

@@ -7,44 +7,15 @@ import { WalkContext } from "./context";
 
 import { Rule } from "./rule";
 import { RuleRegistry } from "./rule-registry";
-import {
-    BlockNameIsRequiredRule,
-    GridTooMuchMarketingBlocksRule,
-    TextInvalidH2PositionRule,
-    TextInvalidH3PositionRule,
-    TextSeveralH1Rule,
-    UppercaseNamesAreForbiddenRule,
-    WarningInvalidButtonPositionRule,
-    WarningInvalidButtonSizeRule,
-    WarningInvalidPlaceholderSizeRule,
-    WarningTextSizesShouldBeEqualRule
-} from "./rules";
+import { getLinterRules } from "./linter-rules";
 
-
-export function getAllRules(): Array<Rule> {
-    return [
-        new WarningTextSizesShouldBeEqualRule(),
-        new WarningInvalidButtonSizeRule(),
-        new WarningInvalidButtonPositionRule(),
-        new WarningInvalidPlaceholderSizeRule(),
-
-        new TextSeveralH1Rule(),
-        new TextInvalidH2PositionRule(),
-        new TextInvalidH3PositionRule(),
-
-        new GridTooMuchMarketingBlocksRule(),
-
-        new BlockNameIsRequiredRule(),
-        new UppercaseNamesAreForbiddenRule()
-    ];
-}
 
 /**
- * Проверить на ошибки json
+ * Проверить на ошибки json.
  * @param json строка, содержащая json
  */
 export function lint(json: string): Array<Problem> {
-    const rules = getAllRules();
+    const rules = getLinterRules();
     const linter = createLinter(...rules);
 
     return linter(json);

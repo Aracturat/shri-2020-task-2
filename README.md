@@ -51,7 +51,7 @@ export class NewRule implements Rule {
 }
 ```
 
-Каждое правило объявляет все возможные сообщения в поле messages.
+Правило объявляет все возможные сообщения в поле messages.
 
 Основная логика хранится в методе create. Данный метод принимает класс Context 
 (в данный момент он содержит только один метод report, позволяющий сообщить об проблеме в json).
@@ -86,11 +86,11 @@ export class NewRule implements Rule {
 
 ### Регистрация правил
 
-Для того, чтобы правило начало использоваться, его надо указать в файле `linter.ts` в функции `getAllRules()`. 
+Для того, чтобы правило начало использоваться, его надо указать в файле `linter-rules.ts` в функции `getLinterRules()`. 
 В данный момент линтер содержит все правила для задания 2 и задания 3:
 
 ```ts
-export function getAllRules(): Array<Rule> {
+export function getLinterRules(): Array<Rule> {
     return [
         new WarningTextSizesShouldBeEqualRule(),
         new WarningInvalidButtonSizeRule(),

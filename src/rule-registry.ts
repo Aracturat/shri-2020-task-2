@@ -4,6 +4,11 @@ import { Context } from "./context";
 import { tryGetBemInfo } from "./utils";
 import { Checker, Rule } from "./rule";
 
+
+/**
+ * Хранилище всех правил.
+ * Занимается хранением и применением нужных правил к узлам.
+ */
 export class RuleRegistry {
     private readonly context: Context;
     private readonly checkers = new Map<string, Array<Checker>>();
@@ -13,6 +18,10 @@ export class RuleRegistry {
         this.context = context;
     }
 
+    /**
+     * Добавить правило
+     * @param rule правило
+     */
     add(rule: Rule) {
         Object.keys(rule.messages)
             .forEach(key => {
@@ -55,6 +64,12 @@ export class RuleRegistry {
         }
     }
 
+    /**
+     * Применить к узлу зарегистрированные правила.
+     * @param node узел
+     * @param parent родительский узел
+     * @param type тип момента (смотри README)
+     */
     applyCheckers(node: AstEntity, parent: AstEntity | null, type: 'Enter' | 'Exit') {
         this.applyCheckersByCheckerType(`${ node.type }:${ type }`, node, parent);
 
@@ -70,6 +85,9 @@ export class RuleRegistry {
         }
     }
 
+    /**
+     * Получить все возможные сообщения об проблемах.
+     */
     getMessages() {
         return this.messages;
     }

@@ -4,6 +4,7 @@ import { Context } from "../context";
 import { Rule } from "../rule";
 import { findByPath } from "../utils";
 
+
 export class WarningInvalidPlaceholderSizeRule implements Rule {
     messages = {
         'WARNING.INVALID_PLACEHOLDER_SIZE': 'Допустимые размеры для блока placeholder в блоке warning (значение модификатора size): s, m, l'

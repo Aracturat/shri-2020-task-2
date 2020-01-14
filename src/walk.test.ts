@@ -1,6 +1,7 @@
 import * as parseJson from "json-to-ast";
 import { walk } from './walk';
 
+
 test('walk', () => {
     const object = [{
         'block': 'name'

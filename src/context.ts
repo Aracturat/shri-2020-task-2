@@ -1,11 +1,16 @@
 import { AstEntity } from "json-to-ast";
 import { Problem } from "./problem";
 
+
 export interface ProblemInfo {
     node: AstEntity,
     code: string
 }
 
+/**
+ * Контекст.
+ * В данный момент только хранит информацию о произошедших ошибках.
+ */
 export interface Context {
     report(problemInfo: ProblemInfo): void
 }

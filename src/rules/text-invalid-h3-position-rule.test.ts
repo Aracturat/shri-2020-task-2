@@ -1,6 +1,7 @@
 import { TextInvalidH3PositionRule } from "./text-invalid-h3-position-rule";
 import { createLinter } from "../linter";
 
+
 function lint(object: object) {
     const linter = createLinter(new TextInvalidH3PositionRule());
 

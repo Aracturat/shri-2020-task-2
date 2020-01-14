@@ -4,6 +4,7 @@ import { Context } from "../context";
 import { Rule } from "../rule";
 import { findByPath } from "../utils";
 
+
 export class TextInvalidH2PositionRule implements Rule {
     messages = {
         'TEXT.INVALID_H2_POSITION': 'Заголовок второго уровня (блок text с модификатором type h2) не может находиться перед заголовком первого уровня на том же или более глубоком уровне вложенности'

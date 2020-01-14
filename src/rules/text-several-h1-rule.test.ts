@@ -1,6 +1,7 @@
 import { TextSeveralH1Rule } from "./text-several-h1-rule";
 import { createLinter } from "../linter";
 
+
 function lint(object: object) {
     const linter = createLinter(new TextSeveralH1Rule());
 

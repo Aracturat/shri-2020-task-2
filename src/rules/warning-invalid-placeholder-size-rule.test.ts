@@ -1,6 +1,7 @@
 import { createLinter } from "../linter";
 import { WarningInvalidPlaceholderSizeRule } from "./warning-invalid-placeholder-size-rule";
 
+
 function lint(object: object) {
     const linter = createLinter(new WarningInvalidPlaceholderSizeRule());
 

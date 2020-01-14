@@ -1,9 +1,11 @@
+import * as parseJson from "json-to-ast";
+import { AstEntity} from "json-to-ast";
+
 import { Rule } from './rule';
 import { Context, ProblemInfo } from "./context";
 import { RuleRegistry } from "./rule-registry";
-import * as parseJson from "json-to-ast";
 import { walk } from "./walk";
-import AstEntity = JsonToAst.AstEntity;
+
 
 class TestContext implements Context {
     public problemCodes = new Array<string>();

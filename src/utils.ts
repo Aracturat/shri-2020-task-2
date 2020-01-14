@@ -1,13 +1,24 @@
 import { AstArray, AstEntity, AstObject, AstProperty } from "json-to-ast";
 
-export function findProperty(object: AstObject, identifier: string): AstProperty | undefined {
+
+/**
+ * Найти свойство объекта с заданным именем.
+ * @param object объект
+ * @param propertyName имя свойства
+ */
+export function findProperty(object: AstObject, propertyName: string): AstProperty | undefined {
     if (!object || !object.children) {
         return undefined;
     }
 
-    return object.children.find(e => e.key.value === identifier);
+    return object.children.find(e => e.key.value === propertyName);
 }
 
+/**
+ * Найти значение свойства объекта с заданным именем.
+ * @param object объект
+ * @param propertyName имя свойства
+ */
 export function findPropertyValue(object: AstObject, propertyName: string): AstEntity | undefined {
     let property = findProperty(object, propertyName);
 
@@ -18,8 +29,12 @@ export function findPropertyValue(object: AstObject, propertyName: string): AstE
     return property.value;
 }
 
-export function getBlockName(node: AstObject) {
-    const block = findProperty(node, 'block');
+/**
+ * Получить имя bem блока из объекта.
+ * @param object
+ */
+export function getBlockName(object: AstObject) {
+    const block = findProperty(object, 'block');
     if (!block) {
         return undefined;
     }
@@ -29,6 +44,11 @@ export function getBlockName(node: AstObject) {
     }
 }
 
+/**
+ * Найти в массиве все блоки с заданным именем.
+ * @param array массив
+ * @param blockName имя блока
+ */
 export function findBlocks(array: AstArray, blockName: string): AstObject[] {
     if (!array) {
         return [];
@@ -43,6 +63,12 @@ export function findBlocks(array: AstArray, blockName: string): AstObject[] {
     }) as AstObject[];
 }
 
+/**
+ * Найти узел дерева по пути.
+ * Путь имеет вид "key1.key2.key3" и поддерживает вложенность любой глубины.
+ * @param object объект
+ * @param path путь
+ */
 export function findByPath(object: AstObject, path: string): AstEntity | undefined {
     if (!object || !path) {
         return undefined;
@@ -63,8 +89,13 @@ export function findByPath(object: AstObject, path: string): AstEntity | undefin
     return result;
 }
 
-export function tryGetBemInfo(node: AstObject, parent: AstEntity | null = null): { block?: string, elem?: string } {
-    if (!node) {
+/**
+ * Попытаться получить bem информацию из объекта.
+ * @param object объект
+ * @param parent родительсткий узел
+ */
+export function tryGetBemInfo(object: AstObject, parent: AstEntity | null = null): { block?: string, elem?: string } {
+    if (!object) {
         return {};
     }
 
@@ -78,14 +109,14 @@ export function tryGetBemInfo(node: AstObject, parent: AstEntity | null = null):
     }
 
     // Проверяем наличие поля block.
-    const blockProperty = findProperty(node, 'block');
+    const blockProperty = findProperty(object, 'block');
 
     if (!blockProperty || blockProperty.value.type !== 'Literal' || !blockProperty.value.value) {
         return {};
     }
 
     // Проверяем наличие поля elem.
-    const elemProperty = findProperty(node, 'elem');
+    const elemProperty = findProperty(object, 'elem');
 
     if (!elemProperty || elemProperty.value.type !== 'Literal' || !elemProperty.value.value) {
         return {

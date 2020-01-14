@@ -1,6 +1,7 @@
 import { createLinter } from "../linter";
 import { UppercaseNamesAreForbiddenRule } from "./uppercase-names-are-forbidden-rule";
 
+
 function lint(object: object) {
     const linter = createLinter(new UppercaseNamesAreForbiddenRule());
 

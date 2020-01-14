@@ -1,5 +1,6 @@
 import { lint } from "./linter";
 
+
 it('lints simple correct block', () => {
     // Из тестов для WarningTextSizesShouldBeEqualRule
     const object = {

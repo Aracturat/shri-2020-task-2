@@ -4,6 +4,7 @@ import { Context } from "../context";
 import { Rule } from "../rule";
 import { findProperty } from "../utils";
 
+
 export class BlockNameIsRequiredRule implements Rule {
     messages = {
         'BLOCK_NAME_IS_REQUIRED': 'В каждом объекте должно быть поле block'

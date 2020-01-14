@@ -2,6 +2,7 @@ import { AstArray, AstEntity, AstIdentifier, AstLiteral, AstObject, AstProperty 
 
 import { Context } from "./context";
 
+
 export type Checker =
     | ((node: AstObject, parent: AstEntity | null) => void)
     | ((node: AstArray, parent: AstEntity | null) => void)

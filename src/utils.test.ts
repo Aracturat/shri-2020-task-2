@@ -1,6 +1,7 @@
 import * as parseJson from "json-to-ast";
 import { findBlocks, findByPath, findProperty, findPropertyValue, getBlockName, tryGetBemInfo } from "./utils";
 
+
 describe('findProperty', () => {
     it('finds property', () => {
         const block = {
